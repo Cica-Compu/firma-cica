@@ -10,25 +10,28 @@
     #preview {
       display: flex; align-items: center; padding: 20px;
       border: 1px solid #ccc; margin-top: 20px; background: #fff;
-      gap: 20px; max-width: 900px;
+      gap: 80px; max-width: 900px;
     }
     .logo { height: 80px; }
     .cica-text {
       font-size: 14px;
+      max-width: 600px;
     }
     .cica-title {
       font-size: 20px; font-weight: bold;
+      max-width: 00px;
     }
     .bar {
-      height: 2px; background: #00bdf2; width: 100px; margin: 4px 0;
+      height: 2px; background: #00bdf2; width: 100px; margin: 4px 2;
     }
     .info-box {
       background: #00bdf2; color: white;
-      padding: 10px; font-size: 14px;
+      padding: 20px; font-size: 14px;
       max-width: 300px;
     }
     .info-box a {
       color: white;
+      max-width: 600px;
     }
     button {
       margin-top: 20px; padding: 10px 20px;
@@ -40,19 +43,19 @@
   <h1>Generador de Firma CICA</h1>
 
   <label>Nombre completo:
-    <input type="text" id="nombre" value="nombre">
+    <input type="text" id="nombre" value=" ">
   </label>
   <label>Puesto:
-    <input type="text" id="puesto" value="puesto">
+    <input type="text" id="puesto" value=" ">
   </label>
   <label>Teléfono:
     <input type="text" id="telefono" value="+ (506) 2511-XXXX">
   </label>
   <label>Correos electrónicos:
-    <input type="text" id="correos" value="correo personal / correo departamental">
+    <input type="text" id="correos" value=" ">
   </label>
   <label>Sitio web:
-    <input type="text" id="web" value="www.cica.ucr.ac.cr">
+    <input type="text" id="web" value="www.cica.ucr.ac.cr"></label></body>
   </label>
 
   <button onclick="generarFirma()">Actualizar vista previa</button>
@@ -62,17 +65,12 @@
   <div id="preview-container">
     <div id="preview">
       <img src="firma-ucr.png" class="logo" alt="Logo UCR">
-      <div class="cica-text">
-        <div class="cica-title">CICA</div>
-        <div class="bar"></div>
-        Centro de Investigación en<br>
-        <strong>Contaminación Ambiental</strong>
-      </div>
+      <img src="logo-cica.png" class="logo" alt="Texto CICA">
       <div class="info-box" id="firma-generada">
         <strong>Nombre</strong><br>
         Puesto<br>
         Tel: + (506) 2511-XXXX<br>
-        correo persona / correo departamental<br>
+        correo personal / correo departamental<br>
         <a href="https://www.cica.ucr.ac.cr">www.cica.ucr.ac.cr</a>
       </div>
     </div>
@@ -108,10 +106,13 @@
 
     function descargarImagen() {
       const node = document.getElementById('preview');
-      html2canvas(node).then(canvas => {
+      html2canvas(node, {scale: window.devicePixelRatio || 10, // Ajusta a la densidad de pantalla
+      useCORS: true, // Permite cargar imágenes externas sin problemas CORS
+      allowTaint: false,
+      logging: false}).then(canvas => {
         const link = document.createElement('a');
         link.download = 'firma-ucr.png';
-        link.href = canvas.toDataURL();
+        link.href = canvas.toDataURL('image/png');
         link.click();
       });
     }
